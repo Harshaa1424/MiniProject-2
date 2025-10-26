@@ -12,13 +12,13 @@ spec:
       labels:
         app: mini-project-2
     spec:
-      containers:
-        - name: mini-project-2
-          image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/mini-project-2:latest
-          ports:
-            - containerPort: 3000
-      imagePullSecrets:
-        - name: ecr-creds
+  containers:
+    - name: mini-project-2
+      image: 650251688006.dkr.ecr.us-east-2.amazonaws.com/mini-project-2:latest
+      ports:
+        - containerPort: 3000
+  imagePullSecrets:
+    - name: ecr-creds
 ---
 apiVersion: v1
 kind: Service
