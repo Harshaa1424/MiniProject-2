@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: mini-project-2
+        LoadBalancerInfo:
+          ContainerName: mini-project-2
+          ContainerPort: 3000
