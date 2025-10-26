@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin <aws-account-id>.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t mini-project-2 .
+      - docker tag mini-project-2:latest <aws-account-id>.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/mini-project-2:latest
+  post_build:
+    commands:
+      - echo Pushing Docker image to ECR...
+      - docker push <aws-account-id>.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/mini-project-2:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"mini-project-2","imageUri":"%s"}]' <aws-account-id>.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/mini-project-2:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
